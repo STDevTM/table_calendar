@@ -365,26 +365,29 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
 
   Widget _buildHeader() {
     final children = [
-      widget.headerStyle.showLeftChevron ?
-        _CustomIconButton(
-          icon: widget.headerStyle.leftChevronIcon,
-          onTap: _selectPrevious,
-          margin: widget.headerStyle.leftChevronMargin,
-          padding: widget.headerStyle.leftChevronPadding,
-        ) : Container(),
       Expanded(
         child: GestureDetector(
           onTap: _onHeaderTapped,
           onLongPress: _onHeaderLongPressed,
-          child: Text(
-            widget.headerStyle.titleTextBuilder != null
-                ? widget.headerStyle.titleTextBuilder(widget.calendarController.focusedDay, widget.locale)
-                : DateFormat.yMMMM(widget.locale).format(widget.calendarController.focusedDay),
-            style: widget.headerStyle.titleTextStyle,
-            textAlign: widget.headerStyle.centerHeaderTitle ? TextAlign.center : TextAlign.start,
+          child: Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
+              widget.headerStyle.titleTextBuilder != null
+                  ? widget.headerStyle.titleTextBuilder(widget.calendarController.focusedDay, widget.locale)
+                  : DateFormat.yMMMM(widget.locale).format(widget.calendarController.focusedDay),
+              style: widget.headerStyle.titleTextStyle,
+              textAlign: widget.headerStyle.centerHeaderTitle ? TextAlign.center : TextAlign.start,
+            ),
           ),
         ),
       ),
+      widget.headerStyle.showLeftChevron ?
+      _CustomIconButton(
+        icon: widget.headerStyle.leftChevronIcon,
+        onTap: _selectPrevious,
+        margin: widget.headerStyle.leftChevronMargin,
+        padding: widget.headerStyle.leftChevronPadding,
+      ) : Container(),
       widget.headerStyle.showRightChevron ?
         _CustomIconButton(
           icon: widget.headerStyle.rightChevronIcon,
@@ -551,10 +554,13 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
         if (widget.builders.dowWeekdayBuilder != null) {
           return widget.builders.dowWeekdayBuilder(context, weekdayString);
         }
-        return Center(
-          child: Text(
-            weekdayString,
-            style: isWeekend ? widget.daysOfWeekStyle.weekendStyle : widget.daysOfWeekStyle.weekdayStyle,
+        return Padding(
+          padding: widget.daysOfWeekStyle.padding,
+          child: Center(
+            child: Text(
+              weekdayString,
+              style: isWeekend ? widget.daysOfWeekStyle.weekendStyle : widget.daysOfWeekStyle.weekdayStyle,
+            ),
           ),
         );
       }).toList(),

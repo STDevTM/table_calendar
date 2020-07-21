@@ -243,6 +243,14 @@ class CalendarController {
   String _getFormatButtonText() =>
       _useNextCalendarFormat ? _availableCalendarFormats[_nextFormat()] : _availableCalendarFormats[_calendarFormat.value];
 
+  void next() {
+    _selectNext();
+  }
+
+  void previous() {
+    _selectPrevious();
+  }
+
   void _selectPrevious() {
     if (calendarFormat == CalendarFormat.month) {
       _selectPreviousMonth();
